@@ -6,13 +6,15 @@ export const Login = () => {
   return (
     <>
       <NavBar />
-      <div>
+      <div className="content">
         <h1 className="header">Sign in</h1>
-        <form className="content">
+        <form>
           <input placeholder="Email" />
           <input placeholder="Password" />
           <Link to="../dashboard">
-            <button className="primary-button">Sign in</button>
+            <button className="primary-button" id="regular-button">
+              Sign in
+            </button>
           </Link>
         </form>
       </div>

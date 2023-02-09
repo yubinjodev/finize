@@ -8,11 +8,14 @@ export const NavBar = () => {
       </Link>
       <div className="button-container">
         <Link to="/login">
-          <button className="primary-button">Sign in</button>
+          <button className="primary-button" id="navbar-button">
+            Sign in
+          </button>
         </Link>
-
         <Link to="/signup">
-          <button className="secondary-button">Sign up</button>
+          <button className="secondary-button" id="navbar-button">
+            Sign up
+          </button>
         </Link>
       </div>
     </div>

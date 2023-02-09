@@ -4,6 +4,7 @@
     --primary:#21083B;
     --secondary:#884DC7;
     --tertiary:#3A86E5;
+    --quaternary:#18D4C9;
 }
 
 *{
@@ -16,22 +17,31 @@ body{
     overflow-x: hidden;
 }
 
-
 input{
-    width: 300px;
+    width: 290px;
     height: 40px;
+    padding-left:10px;
     background-color: white;
     border-radius: 30px;
+    border: none;
+    outline: none;
 }
 
-input:active{
-border: 1px 
+input:focus{
+    outline: none;
+    border: none;
+    box-shadow: 0 0 10px var(--quaternary);
 }
 
 button{
     border-style: none;
     font-size: 14px;
+    font-weight:500;
     cursor: pointer;
+}
+
+hr{
+    border:1px solid white;
 }
 
 .content{
@@ -42,10 +52,19 @@ button{
 
 .content > div{
     margin:10px;
+    align-items: center;
 }
 
-.content> input{
+form > *{
     margin:10px;
+}
+
+#navbar-button{
+    margin:3px;
+}
+
+#regular-button{
+    width: 300px;
 }
 
 .primary-button{
@@ -88,6 +107,7 @@ button{
     position: sticky;
     top: 0;
     background-color: var(--primary);
+    padding:10px;
 }
 
 .button-container{

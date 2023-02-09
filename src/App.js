@@ -3,7 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Home } from "./components/Home";
 import { Login } from "./components/auth/Login";
 import { SignUp } from "./components/auth/SignUp";
-import { Dashboard } from "./components/Dashboard";
+import { SignUpStarter } from "./components/SignUpStarter";
+import { Dashboard } from "./Dashboard";
+import { History } from "./History";
 
 const AllRoutes = [
   {
@@ -22,9 +24,19 @@ const AllRoutes = [
     element: <SignUp />,
   },
   {
+    name: "Sign Up Starter",
+    path: "/sign-up-starter",
+    element: <SignUpStarter />,
+  },
+  {
     name: "Dashboard",
     path: "/dashboard",
     element: <Dashboard />,
+  },
+  {
+    name: "History",
+    path: "/history",
+    element: <History />,
   },
 ];
 
