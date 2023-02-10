@@ -1,23 +1,52 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../Firebase";
+
+import { useState } from "react";
+
 import { NavBar } from "../NavBar";
 
-import { Link } from "react-router-dom";
-
 export const SignUp = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log("asdg");
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        console.log(userCredential);
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div>
       <NavBar />
       <div className="content">
         <h1 className="header">Sign up</h1>
-        <form>
+        <form onSubmit={submitHandler}>
           <input placeholder="Name" />
-          <input placeholder="Email" />
-          <input placeholder="Password" />
+          <input
+            placeholder="Email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
+          <input
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
           <input placeholder="Re-enter Password" />
-          <Link to="../sign-up-starter">
-            <button className="primary-button" id="regular-button">
-              Sign up
-            </button>
-          </Link>
+          <button type="submit" className="primary-button" id="regular-button">
+            Sign up
+          </button>
         </form>
       </div>
     </div>
