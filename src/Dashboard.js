@@ -1,10 +1,8 @@
-import { NavBar } from "./components/NavBar";
-
-export const Dashboard = () => {
+export const Dashboard = ({ id }) => {
   return (
     <>
-      <NavBar />
       <div className="content">
+        <div>Hi {id}</div>
         <h1>Dashboard</h1>
         <>
           <h1>All</h1>

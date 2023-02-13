@@ -8,13 +8,14 @@
 }
 
 *{
-    background-color: var(--primary);
-    font-family: 'Inter', sans-serif;
+   
     /* border: 0.5px solid red; */
 }
 
 body{
-    overflow-x: hidden;
+    overflow-x: hidden; 
+    background-color: var(--primary);
+    font-family: 'Inter', sans-serif;
 }
 
 input{

@@ -1,6 +1,5 @@
 import "./Calendar.css";
 
-import { NavBar } from "./components/NavBar";
 import Calendar from "react-calendar";
 
 export const History = () => {
@@ -14,7 +13,6 @@ export const History = () => {
 
   return (
     <>
-      <NavBar />
       <div className="content">
         <h1>{today}</h1>
         <Calendar />

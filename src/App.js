@@ -6,8 +6,12 @@ import { SignUp } from "./components/auth/SignUp";
 import { SignUpStarter } from "./components/SignUpStarter";
 import { Dashboard } from "./Dashboard";
 import { History } from "./History";
+import { NavBar } from "./components/NavBar";
 
-const AllRoutes = [
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const publicRoutes = [
   {
     name: "Home",
     path: "/",
@@ -23,6 +27,9 @@ const AllRoutes = [
     path: "/signup",
     element: <SignUp />,
   },
+];
+
+const privateRoutes = [
   {
     name: "Sign Up Starter",
     path: "/sign-up-starter",
@@ -43,9 +50,17 @@ const AllRoutes = [
 function App() {
   return (
     <>
+      <ToastContainer />
       <BrowserRouter>
+        <NavBar />
         <Routes>
-          {AllRoutes.map((route, index) => {
+          <Route path="*" element={<Login />} />
+          {publicRoutes.map((route, index) => {
+            return (
+              <Route key={index} path={route.path} element={route.element} />
+            );
+          })}
+          {privateRoutes.map((route, index) => {
             return (
               <Route key={index} path={route.path} element={route.element} />
             );

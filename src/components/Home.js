@@ -1,11 +1,8 @@
 import "../Styling.css";
 
-import { NavBar } from "./NavBar";
-
 export const Home = () => {
   return (
     <div>
-      <NavBar />
       <div className="content">
         <h1 className="header">Lorem Ipsum</h1>
         <div>

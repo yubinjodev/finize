@@ -1,18 +1,34 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import { NavBar } from "../NavBar";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const auth = getAuth();
+  const navigate = useNavigate();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        navigate("/dashboard", { id: user.uid });
+        // ...
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <>
-      <NavBar />
       <div className="content">
         <h1 className="header">Sign in</h1>
-        <form>
+        <form onSubmit={submitHandler}>
           <input
             placeholder="Email"
+            type="Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -20,6 +36,7 @@ export const Login = () => {
           />
           <input
             placeholder="Password"
+            type="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);

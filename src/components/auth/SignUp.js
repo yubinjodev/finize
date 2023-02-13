@@ -1,21 +1,30 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase";
+import { getDatabase, ref, set } from "firebase/database";
+import { toast } from "react-toastify";
 
-import { useState } from "react";
-
-import { NavBar } from "../NavBar";
-
-export const SignUp = () => {
+export const SignUp = (loggedIn) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const db = getDatabase();
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log("asdg");
+    password.length < 6
+      ? toast.warn("Your password should be at least 6 characters")
+      : toast.success("Sign up successful");
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        console.log(userCredential);
         const user = userCredential.user;
+        set(ref(db, "users/" + user.uid), {
+          email: email,
+          password: password,
+        });
+        navigate("/sign-up-starter", { id: user.uid });
         // ...
       })
       .catch((error) => {
@@ -24,13 +33,12 @@ export const SignUp = () => {
   };
   return (
     <div>
-      <NavBar />
       <div className="content">
         <h1 className="header">Sign up</h1>
         <form onSubmit={submitHandler}>
-          <input placeholder="Name" />
           <input
             placeholder="Email"
+            type="Email"
             value={email}
             onChange={(e) => {
               setEmail(e.target.value);
@@ -38,12 +46,12 @@ export const SignUp = () => {
           />
           <input
             placeholder="Password"
+            type="Password"
             value={password}
             onChange={(e) => {
               setPassword(e.target.value);
             }}
           />
-          <input placeholder="Re-enter Password" />
           <button type="submit" className="primary-button" id="regular-button">
             Sign up
           </button>
