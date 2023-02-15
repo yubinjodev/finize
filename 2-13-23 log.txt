@@ -15,6 +15,9 @@ private routing => 미완성
 사용자의 state을 가지고 와야되는데 아직 구현중이다
 
 다음에 할것
-1. private routing first
-2. log in log out rendering navbar properly
-3. fetch data from db in dashboard
+1. private routing first => DONE
+2. log in log out rendering navbar properly =>DONE
+3. fetch data from db in dashboard 
+
+2-16-2023
+number 3 kind of done. it just needs to fetch data once and we need to figure out how to configure the map() function.

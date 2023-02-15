@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { getAuth } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 
-export const SignUpStarter = ({ id }) => {
+export const SignUpStarter = () => {
   const navigate = useNavigate();
+  const auth = getAuth();
+  const user = auth.currentUser;
   const db = getDatabase();
   const [budget, setBudget] = useState({
     income: "",
@@ -14,21 +18,20 @@ export const SignUpStarter = ({ id }) => {
   });
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(id);
-    set(ref(db, "users/" + id + "/budget/"), {
+    set(ref(db, "users/" + user.uid + "/budget/"), {
       income: budget.income,
       health: budget.health,
       food: budget.food,
       rent: budget.rent,
       transportation: budget.transportation,
     });
-    navigate("/dashboard",{id:id});
+    navigate("/dashboard");
   };
   return (
     <>
       <div className="content">
         <h1 className="header">
-          Hi {id}!
+          Hi {user.email}!
           <br />
           Let's get started.
         </h1>

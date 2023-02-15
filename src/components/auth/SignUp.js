@@ -6,7 +6,7 @@ import { auth } from "../../Firebase";
 import { getDatabase, ref, set } from "firebase/database";
 import { toast } from "react-toastify";
 
-export const SignUp = (loggedIn) => {
+export const SignUp = ({ login }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -20,11 +20,12 @@ export const SignUp = (loggedIn) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        login();
         set(ref(db, "users/" + user.uid), {
           email: email,
           password: password,
         });
-        navigate("/sign-up-starter", { id: user.uid });
+        navigate("/sign-up-starter");
         // ...
       })
       .catch((error) => {

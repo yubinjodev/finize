@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
-export const Login = () => {
+export const Login = ({ login }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const auth = getAuth();
@@ -13,8 +13,8 @@ export const Login = () => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
-        const user = userCredential.user;
-        navigate("/dashboard", { id: user.uid });
+        login();
+        navigate("/dashboard");
         // ...
       })
       .catch((error) => {

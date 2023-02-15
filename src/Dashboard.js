@@ -1,40 +1,38 @@
-export const Dashboard = ({ id }) => {
+import { useState } from "react";
+
+import { getAuth } from "firebase/auth";
+import { getDatabase, ref, child, get } from "firebase/database";
+
+export const Dashboard = () => {
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const dbRef = ref(getDatabase());
+
+  const [budget, setBudget] = useState([]);
+
+  // get(child(dbRef, `users/${user.uid}/budget/`))
+  //   .then((snapshot) => {
+  //     if (snapshot.exists()) {
+  //       setBudget(snapshot.val());
+  //     } else {
+  //       console.log("No data available");
+  //     }
+  //   })
+  //   .catch((error) => {
+  //     console.error(error);
+  //   });
+
+  // console.log(budget);
+
   return (
     <>
       <div className="content">
-        <div>Hi {id}</div>
+        <div>Hi {user.email}</div>
         <h1>Dashboard</h1>
         <>
-          <h1>All</h1>
-          <h1>$1,800</h1>
-          <p>Starting balance</p>
-          <input />
-          <p>You've used 15% of your budget</p>
-          <hr />
-        </>
-        <>
-          <h1>All</h1>
-          <h1>$1,800</h1>
-          <p>Starting balance</p>
-          <input />
-          <p>You've used 15% of your budget</p>
-          <hr />
-        </>
-        <>
-          <h1>All</h1>
-          <h1>$1,800</h1>
-          <p>Starting balance</p>
-          <input />
-          <p>You've used 15% of your budget</p>
-          <hr />
-        </>
-        <>
-          <h1>All</h1>
-          <h1>$1,800</h1>
-          <p>Starting balance</p>
-          <input />
-          <p>You've used 15% of your budget</p>
-          <hr />
+          {/* {budget.map((category, index) => (
+            <h1>{category.food}</h1>
+          ))} */}
         </>
       </div>
     </>
