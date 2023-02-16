@@ -1,28 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { getAuth } from "firebase/auth";
-import { getDatabase, ref, child, get } from "firebase/database";
+import { getDatabase, ref, child, get, onValue } from "firebase/database";
 
 export const Dashboard = () => {
   const auth = getAuth();
   const user = auth.currentUser;
-  const dbRef = ref(getDatabase());
+  const dbRef = ref(getDatabase(), `users/${user.uid}/budget/`);
 
-  const [budget, setBudget] = useState([]);
+  const [budget, setBudget] = useState({
+    income:"1000",
+    food:"500",
+    transportation:"200",
+    rent:"450"
+  });
 
-  // get(child(dbRef, `users/${user.uid}/budget/`))
-  //   .then((snapshot) => {
-  //     if (snapshot.exists()) {
-  //       setBudget(snapshot.val());
-  //     } else {
-  //       console.log("No data available");
-  //     }
-  //   })
-  //   .catch((error) => {
-  //     console.error(error);
+  // useEffect(() => {
+  //   onValue(dbRef, (snapshot) => {
+  //     const data = snapshot.val();
+  //     setBudget((budget) => ({ ...budget, data }));
   //   });
-
-  // console.log(budget);
+  // }, []);
 
   return (
     <>
@@ -30,9 +28,7 @@ export const Dashboard = () => {
         <div>Hi {user.email}</div>
         <h1>Dashboard</h1>
         <>
-          {/* {budget.map((category, index) => (
-            <h1>{category.food}</h1>
-          ))} */}
+        
         </>
       </div>
     </>
