@@ -19,11 +19,11 @@ export const SignUpStarter = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     set(ref(db, "users/" + user.uid + "/budget/"), {
-      income: budget.income,
-      health: budget.health,
-      food: budget.food,
-      rent: budget.rent,
-      transportation: budget.transportation,
+      Income: budget.income,
+      Health: budget.health,
+      Food: budget.food,
+      Rent: budget.rent,
+      Transportation: budget.transportation,
     });
     navigate("/dashboard");
   };
