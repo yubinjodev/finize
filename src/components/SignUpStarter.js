@@ -9,31 +9,60 @@ export const SignUpStarter = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const db = getDatabase();
-  const [budget, setBudget] = useState({
-    income: "",
-    health: "",
-    food: "",
-    rent: "",
-    transportation: "",
+  // const [budget, setBudget] = useState({
+  //   income: "",
+  //   health: "",
+  //   food: "",
+  //   rent: "",
+  //   transportation: "",
+  // });
+  const [wallet, setWallet] = useState({
+    income: {
+      budget: "",
+      currentBalance: "",
+    },
+    health: {
+      budget: "",
+      currentBalance: "",
+    },
+    food: {
+      budget: "",
+      currentBalance: "",
+    },
+    rent: {
+      budget: "",
+      currentBalance: "",
+    },
+    transportation: {
+      budget: "",
+      currentBalance: "",
+    },
   });
   const submitHandler = (e) => {
     e.preventDefault();
-    set(ref(db, "users/" + user.uid + "/budget/"), {
-      Income: budget.income,
-      Health: budget.health,
-      Food: budget.food,
-      Rent: budget.rent,
-      Transportation: budget.transportation,
+    set(ref(db, "users/" + user.uid + "/wallet/income"), {
+      budget: wallet.income.budget,
+      currentBalance: wallet.income.currentBalance
     });
-    set(ref(db, "users/" + user.uid + "/currentBalance/"), {
-      Income: budget.income,
-      Health: budget.health,
-      Food: budget.food,
-      Rent: budget.rent,
-      Transportation: budget.transportation,
+    set(ref(db, "users/" + user.uid + "/wallet/health"), {
+      budget: wallet.health.budget,
+      currentBalance: wallet.health.currentBalance
+    });
+    set(ref(db, "users/" + user.uid + "/wallet/food"), {
+      budget: wallet.food.budget,
+      currentBalance: wallet.food.currentBalance
+    });
+    set(ref(db, "users/" + user.uid + "/wallet/rent"), {
+      budget: wallet.rent.budget,
+      currentBalance: wallet.rent.currentBalance
+    });
+    set(ref(db, "users/" + user.uid + "/wallet/transportation"), {
+      budget: wallet.transportation.budget,
+      currentBalance: wallet.transportation.currentBalance
     });
     navigate("/dashboard");
   };
+
   return (
     <>
       <div className="content">
@@ -46,9 +75,13 @@ export const SignUpStarter = () => {
           <p>Monthly income</p>
           <input
             placeholder="$0"
-            value={budget.income}
+            value={wallet.income.budget}
             onChange={(e) => {
-              setBudget({ ...budget, income: e.target.value });
+              setWallet((prevState) => {
+                wallet.income.budget = e.target.value;
+                wallet.income.currentBalance = e.target.value;
+                return { ...prevState };
+              });
             }}
           />
           <hr />
@@ -56,33 +89,49 @@ export const SignUpStarter = () => {
           <p>Health</p>
           <input
             placeholder="$0"
-            value={budget.health}
+            value={wallet.health.budget}
             onChange={(e) => {
-              setBudget({ ...budget, health: e.target.value });
+              setWallet((prevState) => {
+                wallet.health.budget = e.target.value;
+                wallet.health.currentBalance = e.target.value;
+                return { ...prevState };
+              });
             }}
           />
           <p>Food</p>
           <input
             placeholder="$0"
-            value={budget.food}
+            value={wallet.food.budget}
             onChange={(e) => {
-              setBudget({ ...budget, food: e.target.value });
+              setWallet((prevState) => {
+                wallet.food.budget = e.target.value;
+                wallet.food.currentBalance = e.target.value;
+                return { ...prevState };
+              });
             }}
           />
           <p>Rent</p>
           <input
             placeholder="$0"
-            value={budget.rent}
+            value={wallet.rent.budget}
             onChange={(e) => {
-              setBudget({ ...budget, rent: e.target.value });
+              setWallet((prevState) => {
+                wallet.rent.budget = e.target.value;
+                wallet.rent.currentBalance = e.target.value;
+                return { ...prevState };
+              });
             }}
           />
           <p>Transportation</p>
           <input
             placeholder="$0"
-            value={budget.transportation}
+            value={wallet.transportation.budget}
             onChange={(e) => {
-              setBudget({ ...budget, transportation: e.target.value });
+              setWallet((prevState) => {
+                wallet.transportation.budget = e.target.value;
+                wallet.transportation.currentBalance = e.target.value;
+                return { ...prevState };
+              });
             }}
           />
           <p>+ Add custom category</p>

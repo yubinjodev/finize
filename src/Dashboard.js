@@ -11,50 +11,102 @@ export const Dashboard = () => {
   const [incomeExpense, setIncomeExpense] = useState("");
   const [category, setCategory] = useState("food");
   const [wallet, setWallet] = useState({
-    budget: {
-      income: "",
-      health: "",
-      food: "",
-      rent: "",
-      transportation: "",
+    income: {
+      budget: "",
+      currentBalance: "",
     },
-    currentBalance: {
-      income: "",
-      health: "",
-      food: "",
-      rent: "",
-      transportation: "",
+    health: {
+      budget: "",
+      currentBalance: "",
+    },
+    food: {
+      budget: "",
+      currentBalance: "",
+    },
+    rent: {
+      budget: "",
+      currentBalance: "",
+    },
+    transportation: {
+      budget: "",
+      currentBalance: "",
     },
   });
 
   useEffect(() => {
-    const dbBudgetRef = ref(getDatabase(), `users/${user.uid}/budget/`);
-    onValue(dbBudgetRef, (snapshot) => {
-      const budget = snapshot.val();
-      setWallet((wallet) => ({ ...wallet, budget }));
+    const dbIncomeRef = ref(getDatabase(), `users/${user.uid}/wallet/income`);
+    onValue(dbIncomeRef, (snapshot) => {
+      const income = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, income }));
     });
 
-    const dbCurrentBalanceRef = ref(
+    const dbHealthRef = ref(getDatabase(), `users/${user.uid}/wallet/health`);
+    onValue(dbHealthRef, (snapshot) => {
+      const health = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, health }));
+    });
+
+    const dbFoodRef = ref(getDatabase(), `users/${user.uid}/wallet/food`);
+    onValue(dbFoodRef, (snapshot) => {
+      const food = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, food }));
+    });
+
+    const dbRentRef = ref(getDatabase(), `users/${user.uid}/wallet/rent`);
+    onValue(dbRentRef, (snapshot) => {
+      const rent = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, rent }));
+    });
+
+    const dbTransportationRef = ref(
       getDatabase(),
-      `users/${user.uid}/currentBalance/`
+      `users/${user.uid}/wallet/transportation`
     );
-    onValue(dbCurrentBalanceRef, (snapshot) => {
-      const currentBalance = snapshot.val();
-      setWallet((wallet) => ({ ...wallet, currentBalance }));
+    onValue(dbTransportationRef, (snapshot) => {
+      const transportation = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, transportation }));
     });
   }, [user.uid]);
 
-  const submitHandler = (e) => {
+  const addExpense = (e) => {
     e.preventDefault();
-    console.log(incomeExpense);
-    console.log(category);
+    setIncomeExpense("");
+    const newIncomeBalance = wallet.income.currentBalance - incomeExpense;
+    set(
+      ref(db, "users/" + user.uid + "/wallet/income/currentBalance"),
+      newIncomeBalance
+    );
+    const newBalance = wallet[category].currentBalance - incomeExpense;
+    set(
+      ref(db, "users/" + user.uid + `/wallet/${category}/currentBalance`),
+      newBalance
+    );
   };
+
+  const addIncome = (e) => {
+    e.preventDefault();
+    setIncomeExpense("");
+
+    const newIncomeBalance =
+      parseInt(wallet.income.currentBalance) + parseInt(incomeExpense);
+    set(
+      ref(db, "users/" + user.uid + "/wallet/income/currentBalance"),
+      newIncomeBalance
+    );
+    const newBalance =
+      parseInt(wallet[category].currentBalance) + parseInt(incomeExpense);
+    set(
+      ref(db, "users/" + user.uid + `/wallet/${category}/currentBalance`),
+      newBalance
+    );
+  };
+
   return (
     <>
       <div className="content">
         <div>Hi {user.email}</div>
         <h1>Dashboard</h1>
-        <form onSubmit={submitHandler}>
+        <form>
           <input
             placeholder="$0"
             value={incomeExpense}
@@ -64,28 +116,23 @@ export const Dashboard = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            {/* {Object.keys(budget.data).map((key) => {
+            {Object.keys(wallet).map((key) => {
               return <option value={key}>{key}</option>;
-            })} */}
+            })}
           </select>
-          <button>Add income</button>
-          <button type="submit">Add Expense</button>
+          <button onClick={addIncome}>Add income</button>
+          <button onClick={addExpense}>Add Expense</button>
         </form>
-        {Object.entries(wallet.budget).map(([key, value]) => {
+        {Object.entries(wallet).map(([key, value]) => {
           return (
             <>
               <h1>{key}</h1>
-              <h1>${value}</h1>
+              <h1>${value.budget}</h1>
               <p>Budget</p>
+              <h1>${value.currentBalance}</h1>
+              <p>Current Balance</p>
               <ProgressBar completed={100} />
               <hr />
-            </>
-          );
-        })}
-        {Object.values(wallet.currentBalance).map((value, index) => {
-          return (
-            <>
-              <h1>{value}</h1>
             </>
           );
         })}
