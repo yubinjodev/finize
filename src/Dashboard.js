@@ -48,13 +48,6 @@ export const Dashboard = () => {
     e.preventDefault();
     console.log(incomeExpense);
     console.log(category);
-    // set(ref(db, "users/" + user.uid + "/balance/"), {
-
-    // });
-
-    //     todo :
-    // show budget AND currentbalance
-    // enable function to be able to subtract expense from currentbalance
   };
   return (
     <>
@@ -78,31 +71,24 @@ export const Dashboard = () => {
           <button>Add income</button>
           <button type="submit">Add Expense</button>
         </form>
-        <div>
-          {" "}
-          {Object.entries(wallet.budget).map(([key, value]) => {
-            return (
-              <>
-                <h1>{key}</h1>
-                <h1>${value}</h1>
-                <p>Budget</p>
-                <ProgressBar completed={100} />
-                <hr />
-              </>
-            );
-          })}
-          {Object.entries(wallet.currentBalance).map(([key, value]) => {
-            return (
-              <>
-                <h1>{key}</h1>
-                <h1>${value}</h1>
-                <p>Current Balance</p>
-                <ProgressBar completed={100} />
-                <hr />
-              </>
-            );
-          })}
-        </div>
+        {Object.entries(wallet.budget).map(([key, value]) => {
+          return (
+            <>
+              <h1>{key}</h1>
+              <h1>${value}</h1>
+              <p>Budget</p>
+              <ProgressBar completed={100} />
+              <hr />
+            </>
+          );
+        })}
+        {Object.values(wallet.currentBalance).map((value, index) => {
+          return (
+            <>
+              <h1>{value}</h1>
+            </>
+          );
+        })}
       </div>
     </>
   );
