@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 import ProgressBar from "@ramonak/react-progress-bar";
 
 export const Dashboard = () => {
+  const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
   const db = getDatabase();
@@ -104,7 +106,7 @@ export const Dashboard = () => {
   return (
     <>
       <div className="content">
-        <div>Hi {user.email}</div>
+        <button onClick={() => navigate("/history")}>history</button>
         <h1>Dashboard</h1>
         <form>
           <input
@@ -131,7 +133,18 @@ export const Dashboard = () => {
               <p>Budget</p>
               <h1>${value.currentBalance}</h1>
               <p>Current Balance</p>
-              <ProgressBar completed={100} />
+              <ProgressBar
+                completed={parseInt(
+                  ((value.budget - value.currentBalance) / value.budget) * 100
+                )}
+              />
+              <p>
+                You have used{" "}
+                {parseInt(
+                  ((value.budget - value.currentBalance) / value.budget) * 100
+                )}
+                % of your budget
+              </p>
               <hr />
             </>
           );

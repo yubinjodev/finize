@@ -23,7 +23,6 @@ export const NavBar = ({ loggedIn, logout }) => {
         alt="logo"
         onClick={() => navigate("/")}
       />
-      ;
       <div className="button-container">
         {loggedIn ? (
           <button
