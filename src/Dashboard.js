@@ -8,8 +8,17 @@ export const Dashboard = () => {
   const auth = getAuth();
   const user = auth.currentUser;
   const db = getDatabase();
-  const [budget, setBudget] = useState({
-    data: {
+  const [incomeExpense, setIncomeExpense] = useState("");
+  const [category, setCategory] = useState("food");
+  const [wallet, setWallet] = useState({
+    budget: {
+      income: "",
+      health: "",
+      food: "",
+      rent: "",
+      transportation: "",
+    },
+    currentBalance: {
       income: "",
       health: "",
       food: "",
@@ -17,24 +26,35 @@ export const Dashboard = () => {
       transportation: "",
     },
   });
-  const [incomeExpense, setIncomeExpense] = useState("");
-  const [category, setCategory] = useState("food");
+
   useEffect(() => {
-    const dbRef = ref(getDatabase(), `users/${user.uid}/budget/`);
-    onValue(dbRef, (snapshot) => {
-      const data = snapshot.val();
-      setBudget((budget) => ({ ...budget, data }));
+    const dbBudgetRef = ref(getDatabase(), `users/${user.uid}/budget/`);
+    onValue(dbBudgetRef, (snapshot) => {
+      const budget = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, budget }));
+    });
+
+    const dbCurrentBalanceRef = ref(
+      getDatabase(),
+      `users/${user.uid}/currentBalance/`
+    );
+    onValue(dbCurrentBalanceRef, (snapshot) => {
+      const currentBalance = snapshot.val();
+      setWallet((wallet) => ({ ...wallet, currentBalance }));
     });
   }, [user.uid]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(incomeExpense)
-    console.log(category)
+    console.log(incomeExpense);
+    console.log(category);
     // set(ref(db, "users/" + user.uid + "/balance/"), {
-    //   //TODO subtract budget category - expense
-    //   //show current balance
-    //   // shoe in progress bar the percentage of how much they spent
+
     // });
+
+    //     todo :
+    // show budget AND currentbalance
+    // enable function to be able to subtract expense from currentbalance
   };
   return (
     <>
@@ -51,24 +71,38 @@ export const Dashboard = () => {
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
-            {Object.keys(budget.data).map((key) => {
+            {/* {Object.keys(budget.data).map((key) => {
               return <option value={key}>{key}</option>;
-            })}
+            })} */}
           </select>
           <button>Add income</button>
           <button type="submit">Add Expense</button>
         </form>
-        {Object.entries(budget.data).map(([key, value]) => {
-          return (
-            <div key={key}>
-              <h1>{key}</h1>
-              <h1>{value}</h1>
-              <p>Budget</p>
-              <ProgressBar completed={100} />
-              <hr />
-            </div>
-          );
-        })}
+        <div>
+          {" "}
+          {Object.entries(wallet.budget).map(([key, value]) => {
+            return (
+              <>
+                <h1>{key}</h1>
+                <h1>${value}</h1>
+                <p>Budget</p>
+                <ProgressBar completed={100} />
+                <hr />
+              </>
+            );
+          })}
+          {Object.entries(wallet.currentBalance).map(([key, value]) => {
+            return (
+              <>
+                <h1>{key}</h1>
+                <h1>${value}</h1>
+                <p>Current Balance</p>
+                <ProgressBar completed={100} />
+                <hr />
+              </>
+            );
+          })}
+        </div>
       </div>
     </>
   );

@@ -25,6 +25,13 @@ export const SignUpStarter = () => {
       Rent: budget.rent,
       Transportation: budget.transportation,
     });
+    set(ref(db, "users/" + user.uid + "/currentBalance/"), {
+      Income: budget.income,
+      Health: budget.health,
+      Food: budget.food,
+      Rent: budget.rent,
+      Transportation: budget.transportation,
+    });
     navigate("/dashboard");
   };
   return (
