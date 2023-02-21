@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getAuth } from "firebase/auth";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 import ProgressBar from "@ramonak/react-progress-bar";
 
 export const Dashboard = () => {
   const navigate = useNavigate();
-  const auth = getAuth();
-  const user = auth.currentUser;
+  const user = JSON.parse(window.localStorage.getItem("user"));
   const db = getDatabase();
   const [incomeExpense, setIncomeExpense] = useState("");
   const [category, setCategory] = useState("food");
@@ -126,26 +124,25 @@ export const Dashboard = () => {
           <button onClick={addExpense}>Add Expense</button>
         </form>
         {Object.entries(wallet).map(([key, value]) => {
+          const completed = parseInt(
+            ((value.budget - value.currentBalance) / value.budget) * 100
+          );
           return (
             <>
-              <h1>{key}</h1>
-              <h1>${value.budget}</h1>
-              <p>Budget</p>
-              <h1>${value.currentBalance}</h1>
-              <p>Current Balance</p>
-              <ProgressBar
-                completed={parseInt(
-                  ((value.budget - value.currentBalance) / value.budget) * 100
-                )}
-              />
-              <p>
-                You have used{" "}
-                {parseInt(
-                  ((value.budget - value.currentBalance) / value.budget) * 100
-                )}
-                % of your budget
-              </p>
-              <hr />
+              {isNaN(completed) ? (
+                <div></div>
+              ) : (
+                <div>
+                  <h1>{key}</h1>
+                  <h1>${value.budget}</h1>
+                  <p>Budget</p>
+                  <h1>${value.currentBalance}</h1>
+                  <p>Current Balance</p>
+                  <ProgressBar completed={completed} />
+                  <p>You have used {completed}% of your budget</p>
+                  <hr />
+                </div>
+              )}
             </>
           );
         })}

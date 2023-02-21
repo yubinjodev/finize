@@ -9,6 +9,7 @@ export const NavBar = ({ loggedIn, logout }) => {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
+        localStorage.clear();
         logout();
         navigate("/");
       })
