@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { getDatabase, ref, onValue, set } from "firebase/database";
 import ProgressBar from "@ramonak/react-progress-bar";
 
 export const Dashboard = () => {
-  const navigate = useNavigate();
   const user = JSON.parse(window.localStorage.getItem("user"));
   const db = getDatabase();
   const [incomeExpense, setIncomeExpense] = useState("");
+  const [desc, setDesc] = useState("");
   const [category, setCategory] = useState("food");
   const [wallet, setWallet] = useState({
     income: {
@@ -70,7 +69,6 @@ export const Dashboard = () => {
 
   const addExpense = (e) => {
     e.preventDefault();
-    setIncomeExpense("");
     const newIncomeBalance = wallet.income.currentBalance - incomeExpense;
     set(
       ref(db, "users/" + user.uid + "/wallet/income/currentBalance"),
@@ -81,12 +79,30 @@ export const Dashboard = () => {
       ref(db, "users/" + user.uid + `/wallet/${category}/currentBalance`),
       newBalance
     );
+    const today = new Date();
+    const date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    const time = today.getHours() + ":" + today.getMinutes();
+    set(
+      ref(
+        db,
+        "users/" + user.uid + `/wallet/${category}/expenses/${date}/${time}`
+      ),
+      {
+        description: desc,
+        amount: incomeExpense,
+      }
+    );
+    setIncomeExpense("");
+    setDesc("");
   };
 
   const addIncome = (e) => {
     e.preventDefault();
-    setIncomeExpense("");
-
     const newIncomeBalance =
       parseInt(wallet.income.currentBalance) + parseInt(incomeExpense);
     set(
@@ -99,18 +115,43 @@ export const Dashboard = () => {
       ref(db, "users/" + user.uid + `/wallet/${category}/currentBalance`),
       newBalance
     );
+    const today = new Date();
+    const date =
+      today.getFullYear() +
+      "-" +
+      (today.getMonth() + 1) +
+      "-" +
+      today.getDate();
+    const time = today.getHours() + ":" + today.getMinutes();
+    set(
+      ref(
+        db,
+        "users/" + user.uid + `/wallet/${category}/income/${date}/${time}`
+      ),
+      {
+        time: time,
+        description: desc,
+        amount: incomeExpense,
+      }
+    );
+    setIncomeExpense("");
+    setDesc("");
   };
 
   return (
     <>
       <div className="content">
-        <button onClick={() => navigate("/history")}>history</button>
         <h1>Dashboard</h1>
         <form>
           <input
             placeholder="$0"
             value={incomeExpense}
             onChange={(e) => setIncomeExpense(e.target.value)}
+          />
+          <input
+            placeholder="Description"
+            value={desc}
+            onChange={(e) => setDesc(e.target.value)}
           />
           <select
             value={category}
