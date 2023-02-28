@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import "./Menu.css";
 
 import { getAuth, signOut } from "firebase/auth";
+import { elastic as Menu } from "react-burger-menu";
 
 export const NavBar = ({ loggedIn, logout }) => {
   const navigate = useNavigate();
@@ -24,34 +26,33 @@ export const NavBar = ({ loggedIn, logout }) => {
         alt="logo"
         onClick={() => navigate("/")}
       />
-      <div className="button-container">
-        {loggedIn ? (
+      {loggedIn ? (
+        <Menu right>
+          <ul>
+            <li onClick={() => navigate("/")}>Home</li>
+            <li onClick={() => navigate("/dashboard")}>Dashboard</li>
+            <li onClick={() => navigate("/history")}>History</li>
+            <li onClick={handleSignOut}>Sign Out</li>
+          </ul>
+        </Menu>
+      ) : (
+        <div className="button-container">
           <button
             className="primary-button"
             id="navbar-button"
-            onClick={handleSignOut}
+            onClick={() => navigate("/login")}
           >
-            Sign Out
+            Sign in
           </button>
-        ) : (
-          <>
-            <button
-              className="primary-button"
-              id="navbar-button"
-              onClick={() => navigate("/login")}
-            >
-              Sign in
-            </button>
-            <button
-              className="secondary-button"
-              id="navbar-button"
-              onClick={() => navigate("/signup")}
-            >
-              Sign up
-            </button>
-          </>
-        )}
-      </div>
+          <button
+            className="secondary-button"
+            id="navbar-button"
+            onClick={() => navigate("/signup")}
+          >
+            Sign up
+          </button>
+        </div>
+      )}
     </div>
   );
 };

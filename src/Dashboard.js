@@ -161,8 +161,20 @@ export const Dashboard = () => {
               return <option value={key}>{key}</option>;
             })}
           </select>
-          <button onClick={addIncome}>Add income</button>
-          <button onClick={addExpense}>Add Expense</button>
+          <button
+            id="regular-button"
+            className="primary-button"
+            onClick={addIncome}
+          >
+            Add income
+          </button>
+          <button
+            id="regular-button"
+            className="secondary-button"
+            onClick={addExpense}
+          >
+            Add Expense
+          </button>
         </form>
         {Object.entries(wallet).map(([key, value]) => {
           const completed = parseInt(

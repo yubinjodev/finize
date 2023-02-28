@@ -15,6 +15,17 @@ export const History = () => {
   const [selectedDate, setSelectDate] = useState("");
   const user = JSON.parse(window.localStorage.getItem("user"));
   const db = getDatabase();
+
+  const handleIncomeExpense = (date, e) => {
+    const valueString = JSON.stringify(date);
+    setSelectDate(valueString);
+    console.log(date);
+    console.log(selectedDate);
+    //blocked path : date is an object. when JSONstringified, it returns a wrong
+    //date. it is not a timezone issue. the date and the converted date
+    // are too far apart to be even considered a timezone issue.
+  };
+
   useEffect(() => {
     const foodTable = ref(db, `users/${user.uid}/wallet/food/expenses`);
 
@@ -26,19 +37,12 @@ export const History = () => {
       db,
       `users/${user.uid}/wallet/transportation/expenses`
     );
-  }, [user.uid]);
-
-  //get db values, calculate total income or expenese of that day, and show
+  }, [user.uid, db]);
 
   return (
     <>
       <div className="content">
-        <Calendar
-          onChange={(value, e) => {
-            const valueString = JSON.stringify(value).slice(1, 11);
-            setSelectDate(valueString);
-          }}
-        />
+        <Calendar onChange={handleIncomeExpense} />
         <>
           <h1>Income : </h1>
           <h1>Expenses : </h1>
