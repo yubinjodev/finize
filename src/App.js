@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Home } from "./components/Home";
@@ -50,6 +50,15 @@ function App() {
       element: <History />,
     },
   ];
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("loggedIn");
+    if (data !== null) setLoggedIn(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("loggedIn", JSON.stringify(loggedIn));
+  }, [loggedIn]);
 
   return (
     <>

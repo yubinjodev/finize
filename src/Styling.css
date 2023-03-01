@@ -7,10 +7,6 @@
     --quaternary:#18D4C9;
 }
 
-*{
-   
-    /* border: 0.5px solid red; */
-}
 
 body{
     overflow-x: hidden; 
@@ -19,7 +15,7 @@ body{
 }
 
 input{
-    width: 290px;
+    width: 90%;
     height: 40px;
     padding-left:10px;
     background-color: white;
@@ -49,11 +45,17 @@ hr{
     color:white;
     padding:5px 20px;
     line-height: 20px;
+    margin:0 auto;
 }
 
 .content > div{
     margin:10px;
     align-items: center;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
 }
 
 form > *{
@@ -65,7 +67,12 @@ form > *{
 }
 
 #regular-button{
-    width: 300px;
+    width: 90%;
+}
+
+select {
+    width: 90%;
+    height: 30px;
 }
 
 .primary-button{
@@ -119,3 +126,50 @@ form > *{
     margin-left: 5px;
 }
 
+@media screen and (max-width: 2048px) {
+    .content{
+        width:30%;
+        
+    }
+  }
+
+@media screen and (max-width: 1200px) {
+    .content{
+        width:50%;
+        
+    }
+  }
+
+  @media screen and (max-width: 1024px) {
+    .content{
+        width:60%;
+        
+    }
+  
+  }
+
+
+  @media screen and (max-width: 768px) {
+    .content{
+        width:400px;
+        
+    }
+    
+  }
+
+  @media screen and (max-width: 480px) {
+    .content{
+        width:90%;
+        
+    }
+
+  }
+
+
+  @media screen and (max-width: 302px) {
+    .content{
+        width:90%;
+        
+    }
+
+  }

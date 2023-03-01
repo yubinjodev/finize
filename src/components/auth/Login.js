@@ -13,6 +13,8 @@ export const Login = ({ login }) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
+        const user = userCredential.user;
+        window.localStorage.setItem("user", JSON.stringify(user));
         login();
         navigate("/dashboard");
         // ...
