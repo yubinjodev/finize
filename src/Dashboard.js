@@ -142,63 +142,67 @@ export const Dashboard = () => {
     <>
       <div className="content">
         <h1>Dashboard</h1>
-        <form>
-          <input
-            placeholder="$0"
-            value={incomeExpense}
-            onChange={(e) => setIncomeExpense(e.target.value)}
-          />
-          <input
-            placeholder="Description"
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-          />
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            {Object.keys(wallet).map((key) => {
-              return <option value={key}>{key}</option>;
+        <div className="flex">
+          <form className="box1">
+            <input
+              placeholder="$0"
+              value={incomeExpense}
+              onChange={(e) => setIncomeExpense(e.target.value)}
+            />
+            <input
+              placeholder="Description"
+              value={desc}
+              onChange={(e) => setDesc(e.target.value)}
+            />
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              {Object.keys(wallet).map((key) => {
+                return <option value={key}>{key}</option>;
+              })}
+            </select>
+            <button
+              id="regular-button"
+              className="primary-button"
+              onClick={addIncome}
+            >
+              Add income
+            </button>
+            <button
+              id="regular-button"
+              className="secondary-button"
+              onClick={addExpense}
+            >
+              Add Expense
+            </button>
+          </form>
+          <div className="box2">
+            {Object.entries(wallet).map(([key, value]) => {
+              const completed = parseInt(
+                ((value.budget - value.currentBalance) / value.budget) * 100
+              );
+              return (
+                <>
+                  {isNaN(completed) ? (
+                    <></>
+                  ) : (
+                    <>
+                      <h1>{key}</h1>
+                      <h1>${value.budget}</h1>
+                      <p>Budget</p>
+                      <h1>${value.currentBalance}</h1>
+                      <p>Current Balance</p>
+                      <ProgressBar completed={completed} />
+                      <p>You have used {completed}% of your budget</p>
+                      <hr />
+                    </>
+                  )}
+                </>
+              );
             })}
-          </select>
-          <button
-            id="regular-button"
-            className="primary-button"
-            onClick={addIncome}
-          >
-            Add income
-          </button>
-          <button
-            id="regular-button"
-            className="secondary-button"
-            onClick={addExpense}
-          >
-            Add Expense
-          </button>
-        </form>
-        {Object.entries(wallet).map(([key, value]) => {
-          const completed = parseInt(
-            ((value.budget - value.currentBalance) / value.budget) * 100
-          );
-          return (
-            <>
-              {isNaN(completed) ? (
-                <div></div>
-              ) : (
-                <div>
-                  <h1>{key}</h1>
-                  <h1>${value.budget}</h1>
-                  <p>Budget</p>
-                  <h1>${value.currentBalance}</h1>
-                  <p>Current Balance</p>
-                  <ProgressBar completed={completed} />
-                  <p>You have used {completed}% of your budget</p>
-                  <hr />
-                </div>
-              )}
-            </>
-          );
-        })}
+          </div>
+        </div>
       </div>
     </>
   );

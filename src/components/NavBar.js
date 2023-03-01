@@ -31,7 +31,7 @@ export const NavBar = ({ loggedIn, logout }) => {
           <ul>
             <li onClick={() => navigate("/")}>Home</li>
             <li onClick={() => navigate("/dashboard")}>Dashboard</li>
-            <li onClick={() => navigate("/history")}>History</li>
+            {/* <li onClick={() => navigate("/history")}>History</li> */}
             <li onClick={handleSignOut}>Sign Out</li>
           </ul>
         </Menu>

@@ -12,37 +12,37 @@ export const History = () => {
     month: "long",
     // day: "numeric",
   };
-  const [selectedDate, setSelectDate] = useState("");
+  const [selectedDate, setSelectDate] = useState(new Date());
+  const [stringDate, setStringDate] = useState("")
   const user = JSON.parse(window.localStorage.getItem("user"));
   const db = getDatabase();
 
-  const handleIncomeExpense = (date, e) => {
-    const valueString = JSON.stringify(date);
-    setSelectDate(valueString);
-    console.log(date);
-    console.log(selectedDate);
-    //blocked path : date is an object. when JSONstringified, it returns a wrong
-    //date. it is not a timezone issue. the date and the converted date
-    // are too far apart to be even considered a timezone issue.
-  };
+  useEffect(() => {
+    const day = selectedDate.getDate();
+    const month = selectedDate.getMonth() + 1;
+    const year = selectedDate.getFullYear();
+    const formatedDate = year + "-" + month + "-" + day;
+    
+    setStringDate(formatedDate)
+  }, [selectedDate]);
 
   useEffect(() => {
-    const foodTable = ref(db, `users/${user.uid}/wallet/food/expenses`);
+    // const foodTable = ref(db, `users/${user.uid}/wallet/food/expenses`);
 
-    const healthTable = ref(db, `users/${user.uid}/wallet/health/expenses`);
+    // const healthTable = ref(db, `users/${user.uid}/wallet/health/expenses`);
 
-    const rentTable = ref(db, `users/${user.uid}/wallet/rent/expenses`);
+    // const rentTable = ref(db, `users/${user.uid}/wallet/rent/expenses`);
 
-    const transportationTable = ref(
-      db,
-      `users/${user.uid}/wallet/transportation/expenses`
-    );
-  }, [user.uid, db]);
+    // const transportationTable = ref(
+    //   db,
+    //   `users/${user.uid}/wallet/transportation/expenses`
+    // );
+  }, [stringDate]);
 
   return (
     <>
       <div className="content">
-        <Calendar onChange={handleIncomeExpense} />
+        <Calendar onChange={setSelectDate} value={selectedDate} />
         <>
           <h1>Income : </h1>
           <h1>Expenses : </h1>

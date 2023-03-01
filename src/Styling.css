@@ -45,11 +45,17 @@ hr{
     color:white;
     padding:5px 20px;
     line-height: 20px;
+    margin:0 auto;
 }
 
 .content > div{
     margin:10px;
     align-items: center;
+}
+
+.box{
+    display: flex;
+    flex-direction: column;
 }
 
 form > *{
@@ -121,49 +127,49 @@ select {
 }
 
 @media screen and (max-width: 2048px) {
-    form > input, select{
-        width:626px;
-        height:40px
-    }
-    #regular-button{
-        width:300px;
+    .content{
+        width:30%;
+        
     }
   }
 
 @media screen and (max-width: 1200px) {
-    form > input{
-        width:626px;
-        height:40px
+    .content{
+        width:50%;
+        
     }
   }
 
   @media screen and (max-width: 1024px) {
-    form > input{
-        width:626px;
-        height:40px
+    .content{
+        width:60%;
+        
     }
-   
+  
   }
 
 
   @media screen and (max-width: 768px) {
-    form > input,select{
-        width:90%;
-        height:40px
+    .content{
+        width:400px;
+        
     }
+    
   }
 
   @media screen and (max-width: 480px) {
-    form > input{
+    .content{
         width:90%;
-        height:40px
+        
     }
+
   }
 
 
   @media screen and (max-width: 302px) {
-    form > input{
+    .content{
         width:90%;
-        height:40px
+        
     }
+
   }
