@@ -20,6 +20,7 @@ export const SignUp = ({ login }) => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        window.localStorage.setItem("user", JSON.stringify(user));
         login();
         set(ref(db, "users/" + user.uid), {
           email: email,

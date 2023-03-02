@@ -60,6 +60,7 @@ export const SignUpStarter = () => {
       budget: wallet.transportation.budget,
       currentBalance: wallet.transportation.currentBalance
     });
+    
     navigate("/dashboard");
   };
 
