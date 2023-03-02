@@ -1,15 +1,27 @@
-finize 핀나이즈
+Finize is a budgeting web application.
 
-상단왼쪽:
-Budget + bar graph
-예산 정할수 있음
+To run this application locally,
+1. git clone this repository
+2. npm install
+3. npm start
 
-프레임:
-Callender
+To access access Finize through web,
+https://finize-d94b5.web.app/
 
-Callender 기능: 1.하루에 얼마 썻는지 기록(노트 기능) 2.실시간 예산 bar 그래프(총예산 - 입력예산): 3.백엔드 = 백분위 계산 ,return = int,float(ex 87.1, round function 사용)
+What you can do with Finize:
+Sign up and set a budget for the month. Then you can add expense or add income from the dashboard and see how much is left for spending generally or by category.
 
-= Budget - Callender Function = bar graph(activate)
+Landing Page
+![image](https://user-images.githubusercontent.com/95195467/222322762-3ede7ba3-60ff-47f5-a521-8c6320336a18.png)
 
-===========================================
-예산
+Login Page (Auth with Firebase Authentication)
+![image](https://user-images.githubusercontent.com/95195467/222322897-84161a9e-5aea-47bd-b78b-f06396192922.png)
+
+Sign up Page (Auth with Firebase Authentication and storage with Realtime Database)
+![image](https://user-images.githubusercontent.com/95195467/222323007-03eceddb-d2de-4162-ac96-9e776f5631d2.png)
+
+Starter Page (Storage with Realtime Database)
+![image](https://user-images.githubusercontent.com/95195467/222323105-14d02040-09f2-4a92-9c60-6a6733b5e994.png)
+
+Dashboard (CRUD application with Realtime Database)
+![image](https://user-images.githubusercontent.com/95195467/222323268-c91f63aa-1be9-44c0-9838-6c995e3f17cf.png)
