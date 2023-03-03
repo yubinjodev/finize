@@ -1,5 +1,13 @@
 Finize is a budgeting web application.
 
+Project timeline :
+Week 1 - planning, structure wireframe and information architecture
+Week 2 - design
+Week 3 - Development
+Week 4 - Finishing touches
+Developed 3-5 times/week, 2-3 hrs/day
+Total hours : average of 42 hrs
+
 To run this application locally,
 1. git clone this repository
 2. npm install
